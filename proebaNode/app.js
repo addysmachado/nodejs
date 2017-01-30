@@ -530,7 +530,8 @@ function sendTextMessage(recipientId, messageText) {
     }
   };
 
-  callSendAPI(messageData);
+  //callSendAPI(messageData);
+  callSendAPIHCP(messageData);
 }
 
 /*
@@ -827,6 +828,33 @@ function callSendAPI(messageData) {
     }
   });  
 }
+
+function callSendAPIHCP(messageData) {
+	  request({
+	    uri: 'https://zgscx0002p1568923030trial.hanatrial.ondemand.com/zgscx0002/rs/procesos/cartera',
+	    qs: { dni: '123' },
+	    method: 'GET'
+
+	  }, function (error, response, body) {
+	    if (!error ) {
+	      var recipientId = body.recipient_id;
+	      var messageId = body.message_id;
+	      
+	      console.log("Body 1 %s", body);
+	      console.log("Body 2 %s", response);
+	      
+	      if (messageId) {
+	        console.log("Body 3 %s", 
+	        		body);
+	      } else {
+	      console.log("Body 4 %s", 
+	        recipientId);
+	      }
+	    } else {
+	      console.error("Failed calling Body API", response.statusCode, response.statusMessage, body.error);
+	    }
+	  });  
+	}
 
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
