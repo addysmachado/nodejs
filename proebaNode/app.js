@@ -1,6 +1,13 @@
 /**
  * http://usejsdoc.org/
  */
+
+var port = process.env.PORT || 8000;
+
+server.listen(port, function() {
+    console.log("App is running on port " + port);
+});
+
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === 'addysmachado') {
