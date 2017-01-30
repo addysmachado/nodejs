@@ -843,6 +843,18 @@ function callSendAPIHCP(messageData) {
 	      console.log("Body 1 %s", body);
 	      console.log("Body 2 %s", response);
 	      
+	      var messageData2 = {
+	    		    recipient: {
+	    		      id: recipientId
+	    		    },
+	    		    message: {
+	    		      text: body.d.results[0].xref1,
+	    		      metadata: "DEVELOPER_DEFINED_METADATA"
+	    		    }
+	    		  };
+	      
+	      callSendAPI(messageData2);
+	      
 	      if (messageId) {
 	        console.log("Body 3 %s", 
 	        		body);
