@@ -95,7 +95,7 @@ app.post('/webhook', function (req, res) {
 	function callSendAPI(messageData) {
 		  request({
 		    uri: 'https://graph.facebook.com/v2.6/me/messages',
-		    qs: { access_token: PAGE_ACCESS_TOKEN },
+		    qs: { access_token: 'EAADqgnJSOl8BALvCu55oZCKY1BUK9XSosRLxCmxTug4N4RmhDv1dtVYbRyIfiU7HrJrwB34WC6YnXKom8fyLwMhLg7uA4OUv9RFdvGiU0rFLdIDfjqqUzzLZBRVG4WliGgZCDsbLhMxbdNZBeHdvsE2VSd76IpKGvleMUE0cMQZDZD' },
 		    method: 'POST',
 		    json: messageData
 
