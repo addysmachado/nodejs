@@ -2,5 +2,5 @@
     "appSecret": "3c3076e0f94863a6576fb4b5801d3d8a",
     "pageAccessToken": "EAADqgnJSOl8BALvCu55oZCKY1BUK9XSosRLxCmxTug4N4RmhDv1dtVYbRyIfiU7HrJrwB34WC6YnXKom8fyLwMhLg7uA4OUv9RFdvGiU0rFLdIDfjqqUzzLZBRVG4WliGgZCDsbLhMxbdNZBeHdvsE2VSd76IpKGvleMUE0cMQZDZD",
     "validationToken": "addysmachado",
-    "serverURL": "3"
+    "serverURL": "https://testnodejsbot.herokuapp.com"
 }
