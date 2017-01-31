@@ -1006,7 +1006,7 @@ function getDataHCP(recipientId, indicador) {
 					            buttons: [{
 						              type: "web_url",
 						              url: "https://www.sura.com",
-						              title: "Ver detalle"
+						              title: "Pagar"
 						            }]
 					    });		  
 				  }
