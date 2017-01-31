@@ -248,7 +248,7 @@ function receivedMessage(event) {
   var metadata = message.metadata;
 
   // You may get a text or attachment but not both
-  var messageText = message.text;
+  var messageText = message.text.split(" ");
   var messageAttachments = message.attachments;
   var quickReply = message.quick_reply;
 
@@ -266,12 +266,12 @@ function receivedMessage(event) {
     return;
   }
 
-  if (messageText) {
+  if (messageText[0]) {
 
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
-    switch (messageText) {
+    switch (messageText[0]) {
       case 'image':
         sendImageMessage(senderID);
         break;
@@ -325,11 +325,15 @@ function receivedMessage(event) {
         break;
         
       case 'poliza':
-    	  sendPolizaMessage(senderID);
+    	  sendPolizaMessage(senderID, messageText[1]);
     	  break;
 
       case 'recibo':
-    	  sendReciboMessage(senderID);
+    	  sendReciboMessage(senderID, messageText[1]);
+    	  break;
+    	  
+      case 'correo':
+    	  sendCorreoMessage(senderID, messageText[1]);
     	  break;    	  
     	  
       default:
@@ -646,15 +650,21 @@ function sendGenericMessage(recipientId) {
 }
 
 
-function sendPolizaMessage(recipientId) {
+function sendPolizaMessage(recipientId, dni) {
 	  
-      getDataHCP(recipientId, 1);
+      getDataHCP(recipientId, 1, dni);
 	
 	}
 
-function sendReciboMessage(recipientId) {
+function sendReciboMessage(recipientId, dni) {
 	  
-    getDataHCP(recipientId, 2);
+    getDataHCP(recipientId, 2, dni);
+	
+	}
+
+function sendCorreoMessage(recipientId, correo) {
+	  
+	getDataMailHCP(recipientId, 3, correo);
 	
 	}
 
@@ -937,16 +947,15 @@ function getElemntsHCP() {
 	return elements;
 }
 
-function getDataHCP(recipientId, indicador) {
+function getDataHCP(recipientId, indicador, dato) {
 		
 	  var data = null;
 	  var elements 	= [];
 	
 	  request({
-	    uri: 'https://zgscx0002p1568923030trial.hanatrial.ondemand.com/zgscx0002/rs/procesos/cartera',
-	    qs: { dni: '123' },
-	    method: 'GET'
-
+			  uri: 'https://zgscx0002p1568923030trial.hanatrial.ondemand.com/zgscx0002/rs/procesos/cartera',
+			  qs: { dni: dato },
+			  method: 'GET'
 	  }, function (error, response, body) {
 	    if (!error ) {
 	      
@@ -1016,6 +1025,37 @@ function getDataHCP(recipientId, indicador) {
 			  }
 			  
 			  buildPolizaMessage(recipientId, elements, indicador);
+		  }	      
+	      
+	    } else {
+	      console.error("Failed calling Body HCP ", response.statusCode, response.statusMessage, body.error);
+	    }
+	  });
+	  
+	}
+
+function getDataMailHCP(recipientId, indicador, dato) {
+	
+	  var data = null;
+	  var elements 	= [];
+	
+	  request({
+			  uri: 'https://zgscx0002p1568923030trial.hanatrial.ondemand.com/zgscx0002/rs/procesos/correo',
+			  qs: { mail: dato },
+			  method: 'GET'
+	  }, function (error, response, body) {
+	    if (!error ) {
+	      
+	      data = JSON.parse(body);
+	      console.log("Body 1_2 Correo %s", data.d.Correo);
+
+		  if(data)
+		  {
+			  if(data.d.Correo=="OK")
+				  sendTextMessage(recipientId, "A tu cuenta se envió el formato");
+			  else
+				  sendTextMessage(recipientId, "Error enviando el formato");
+
 		  }	      
 	      
 	    } else {
