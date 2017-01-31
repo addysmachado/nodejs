@@ -987,13 +987,11 @@ function getDataHCP(recipientId, indicador) {
                       type: "web_url",
                       url: "https://www.sura.com"
                   },
-                  buttons: [
-                      {
-                          title: "Ver",
-                          type: "web_url",
-                          url: "https://www.sura.com"                   
-                      }
-                  ]
+		            buttons: [{
+			              type: "web_url",
+			              url: "https://www.sura.com",
+			              title: "Ver detalle"
+			            }]
               });
 				  
 				  for (var i = 0; i < len; i++) {
@@ -1006,10 +1004,10 @@ function getDataHCP(recipientId, indicador) {
 			                        url: "https://www.sura.com"
 			                    },					            
 					            buttons: [{
-					              type: "web_url",
-					              url: "https://www.sura.com",
-					              title: "Pagar"					              
-					            }]
+						              type: "web_url",
+						              url: "https://www.sura.com",
+						              title: "Ver detalle"
+						            }]
 					    });		  
 				  }
 				  
