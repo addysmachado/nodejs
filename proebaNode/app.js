@@ -979,9 +979,18 @@ function getDataHCP(recipientId, indicador, dato) {
 					            item_url: "https://www.sura.com",               
 					            image_url: SERVER_URL + "/assets/poliza_"+i+".png",
 					            buttons: [{
-					              type: "web_url",
-					              url: "https://www.sura.com",
-					              title: "Ver detalle"
+					              type: "payment",
+					              title: "Pagar",
+				                  price_list:[
+					                    {
+					                      label:"Subtotal",
+					                      amount:"29.99"
+					                    },
+					                    {
+					                      label:"Taxes",
+					                      amount:"2.47"
+					                    }
+					                  ]
 					            }]
 					          			        
 					        
