@@ -859,10 +859,11 @@ function callSendAPIHCP(messageData) {
 	      
 	      var data= JSON.parse(body);
 	      console.log("Body 1_2 %s", data.d.results[0].Xref1);
+	      console.log("Body 1_3 %s", messageData.recipient.id);
 	      
 	      var messageData2 = {
 	    		    recipient: {
-	    		      id: recipientId
+	    		      id: messageData.recipient.id
 	    		    },
 	    		    message: {
 	    		      text: data.d.results[0].Xref1,
