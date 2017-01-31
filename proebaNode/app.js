@@ -73,6 +73,20 @@ app.get('/webhook', function(req, res) {
   }  
 });
 
+app.get('/prueba', function(req, res) {
+	
+	  var messageData = {
+			    recipient: {
+			      id: '1234'
+			    },
+			    message: {
+			      text: 'Prueba',
+			      metadata: "DEVELOPER_DEFINED_METADATA"
+			    }
+			  };	
+	
+	callSendAPIHCP(messageData) 
+	});
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
@@ -843,12 +857,15 @@ function callSendAPIHCP(messageData) {
 	      console.log("Body 1 %s", body);
 	      console.log("Body 2 %s", response);
 	      
+	      var data= JSON.parse(body);
+	      console.log("Body 1_2 %s", data.d.results[0].Xref1);
+	      
 	      var messageData2 = {
 	    		    recipient: {
 	    		      id: recipientId
 	    		    },
 	    		    message: {
-	    		      text: body.d.results[0].xref1,
+	    		      text: data.d.results[0].Xref1,
 	    		      metadata: "DEVELOPER_DEFINED_METADATA"
 	    		    }
 	    		  };
