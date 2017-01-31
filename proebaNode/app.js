@@ -321,6 +321,10 @@ function receivedMessage(event) {
       case 'account linking':
         sendAccountLinking(senderID);
         break;
+        
+      case 'poliza':
+    	  sendPolizaMessage(senderID);
+    	  break;
 
       default:
         sendTextMessage(senderID, messageText);
@@ -635,6 +639,29 @@ function sendGenericMessage(recipientId) {
   callSendAPI(messageData);
 }
 
+
+function sendPolizaMessage(recipientId) {
+	  
+      var data = getElemntsHCP();
+	
+	  var messageData = {
+	    recipient: {
+	      id: recipientId
+	    },
+	    message: {
+	      attachment: {
+	        type: "template",
+	        payload: {
+	          template_type: "generic",
+	          elements: data
+	        }
+	      }
+	    }
+	  };  
+
+	  callSendAPI(messageData);
+	}
+
 /*
  * Send a receipt message using the Send API.
  *
@@ -854,8 +881,8 @@ function callSendAPIHCP(messageData) {
 	      var recipientId = body.recipient_id;
 	      var messageId = body.message_id;
 	      
-	      console.log("Body 1 %s", body);
-	      console.log("Body 2 %s", response);
+	      //console.log("Body 1 %s", body);
+	      //console.log("Body 2 %s", response);
 	      
 	      var data= JSON.parse(body);
 	      console.log("Body 1_2 %s", data.d.results[0].Xref1);
@@ -884,6 +911,59 @@ function callSendAPIHCP(messageData) {
 	      console.error("Failed calling Body API", response.statusCode, response.statusMessage, body.error);
 	    }
 	  });  
+	}
+
+
+function getElemntsHCP() {
+	
+	  var data 		= getDataHCP();
+	  var elements 	= [];
+	  
+	  if(data)
+	  {
+		  var len = data.d.results.length;
+		  for (var i = 0; i < len; i++) {
+			  elements.push({
+			            title: "Póliza " + data.d.results[i].Xref1 ,
+			            subtitle: "Recibo " + data.d.results[i].Xblnr,
+			            item_url: "https://www.sura.com",               
+			            image_url: SERVER_URL + "/assets/poliza_"+i+".png",
+			            buttons: [{
+			              type: "web_url",
+			              url: "https://www.sura.com",
+			              title: "Pagar"
+			            }]
+			          			        
+			        
+			    });		  
+	  }
+	}
+	return elements;
+}
+
+function getDataHCP() {
+		
+	  var data = null;
+	
+	  request({
+	    uri: 'https://zgscx0002p1568923030trial.hanatrial.ondemand.com/zgscx0002/rs/procesos/cartera',
+	    qs: { dni: '123' },
+	    method: 'GET'
+
+	  }, function (error, response, body) {
+	    if (!error ) {
+	      
+	      data = JSON.parse(body);
+	      console.log("Body 1_2 %s", data.d.results[0].Xref1);
+	      console.log("Body 1_3 %s", messageData.recipient.id);
+	      
+	    } else {
+	      console.error("Failed calling Body HCP ", response.statusCode, response.statusMessage, body.error);
+	    }
+	  });
+	  
+	  return data;
+	  
 	}
 
 // Start server
