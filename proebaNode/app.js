@@ -248,7 +248,7 @@ function receivedMessage(event) {
   var metadata = message.metadata;
 
   // You may get a text or attachment but not both
-  var messageText = message.text.split(" ");
+  var messageText = message.text;
   var messageAttachments = message.attachments;
   var quickReply = message.quick_reply;
 
@@ -266,12 +266,14 @@ function receivedMessage(event) {
     return;
   }
 
-  if (messageText[0]) {
+  var messageTextArray = messageText.split(" ");
+  
+  if (messageTextArray[0]) {
 
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
-    switch (messageText[0]) {
+    switch (messageTextArray[0]) {
       case 'image':
         sendImageMessage(senderID);
         break;
@@ -325,15 +327,15 @@ function receivedMessage(event) {
         break;
         
       case 'poliza':
-    	  sendPolizaMessage(senderID, messageText[1]);
+    	  sendPolizaMessage(senderID, messageTextArray[1]);
     	  break;
 
       case 'recibo':
-    	  sendReciboMessage(senderID, messageText[1]);
+    	  sendReciboMessage(senderID, messageTextArray[1]);
     	  break;
     	  
       case 'correo':
-    	  sendCorreoMessage(senderID, messageText[1]);
+    	  sendCorreoMessage(senderID, messageTextArray[1]);
     	  break;    	  
     	  
       default:
