@@ -75,6 +75,8 @@ app.get('/webhook', function(req, res) {
 
 app.get('/prueba', function(req, res) {
 	
+     var data = getElemntsHCP();
+	
 	  var messageData = {
 			    recipient: {
 			      id: '1234'
@@ -85,7 +87,7 @@ app.get('/prueba', function(req, res) {
 			    }
 			  };	
 	
-	callSendAPIHCP(messageData) 
+	//callSendAPIHCP(messageData) 
 	});
 
 /*
@@ -642,24 +644,8 @@ function sendGenericMessage(recipientId) {
 
 function sendPolizaMessage(recipientId) {
 	  
-      var data = getElemntsHCP();
+      getDataHCP(recipientId);
 	
-	  var messageData = {
-	    recipient: {
-	      id: recipientId
-	    },
-	    message: {
-	      attachment: {
-	        type: "template",
-	        payload: {
-	          template_type: "generic",
-	          elements: data
-	        }
-	      }
-	    }
-	  };  
-
-	  callSendAPI(messageData);
 	}
 
 /*
@@ -941,9 +927,10 @@ function getElemntsHCP() {
 	return elements;
 }
 
-function getDataHCP() {
+function getDataHCP(recipientId) {
 		
 	  var data = null;
+	  var elements 	= [];
 	
 	  request({
 	    uri: 'https://zgscx0002p1568923030trial.hanatrial.ondemand.com/zgscx0002/rs/procesos/cartera',
@@ -955,14 +942,54 @@ function getDataHCP() {
 	      
 	      data = JSON.parse(body);
 	      console.log("Body 1_2 %s", data.d.results[0].Xref1);
+
+		  if(data)
+		  {
+			  var len = data.d.results.length;
+			  for (var i = 0; i < len; i++) {
+				  elements.push({
+				            title: "Póliza " + data.d.results[i].Xref1 ,
+				            subtitle: "Recibo " + data.d.results[i].Xblnr,
+				            item_url: "https://www.sura.com",               
+				            image_url: SERVER_URL + "/assets/poliza_"+i+".png",
+				            buttons: [{
+				              type: "web_url",
+				              url: "https://www.sura.com",
+				              title: "Pagar"
+				            }]
+				          			        
+				        
+				    });		  
+			  }
+			  
+			  buildPolizaMessage(recipientId, data);
+		  }	      
 	      
 	    } else {
 	      console.error("Failed calling Body HCP ", response.statusCode, response.statusMessage, body.error);
 	    }
 	  });
 	  
-	  return data;
-	  
+	}
+
+function buildPolizaMessage(recipientId, data) {
+	
+	  var messageData = {
+	    recipient: {
+	      id: recipientId
+	    },
+	    message: {
+	      attachment: {
+	        type: "template",
+	        payload: {
+	          template_type: "generic",
+	          elements: data
+	        }
+	      }
+	    }
+	  };  
+
+	  callSendAPI(messageData);
 	}
 
 // Start server
