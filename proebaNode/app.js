@@ -986,18 +986,18 @@ function getDataHCP(recipientId, indicador) {
                   default_action: {
                       type: "web_url",
                       url: "https://www.sura.com",
-                      messenger_extensions: true,
+                      messenger_extensions: false,
                       webview_height_ratio: "tall",
-                      fallback_url: "https://www.sura.com"
+                      fallback_url: "https://peterssendreceiveapp.ngrok.io/"
                   },
                   buttons: [
                       {
                           title: "Ver",
                           type: "web_url",
                           url: "https://www.sura.com",
-                          messenger_extensions: true,
+                          messenger_extensions: false,
                           webview_height_ratio: "tall",
-                          fallback_url: "https://www.sura.com"                        
+                          fallback_url: "https://peterssendreceiveapp.ngrok.io/"                        
                       }
                   ]
               });
@@ -1010,17 +1010,17 @@ function getDataHCP(recipientId, indicador) {
 			                    default_action: {
 			                        type: "web_url",
 			                        url: "https://www.sura.com",
-			                        messenger_extensions: true,
+			                        messenger_extensions: false,
 			                        webview_height_ratio: "tall",
-			                        fallback_url: "https://www.sura.com"
+			                        fallback_url: "https://peterssendreceiveapp.ngrok.io/"
 			                    },					            
 					            buttons: [{
 					              type: "web_url",
 					              url: "https://www.sura.com",
 					              title: "Pagar",
-			                      messenger_extensions: true,
+			                      messenger_extensions: false,
 			                      webview_height_ratio: "tall",
-			                      fallback_url: "https://www.sura.com"					              
+			                      fallback_url: "https://peterssendreceiveapp.ngrok.io/"					              
 					            }]
 					    });		  
 				  }
