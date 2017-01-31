@@ -976,6 +976,7 @@ function getDataHCP(recipientId, indicador) {
 					        
 					    });		  
 				  }
+				  break;
 			  
 			  case 2:				  
 				  elements.push({
@@ -1022,7 +1023,9 @@ function getDataHCP(recipientId, indicador) {
 			                      fallback_url: "https://www.sura.com"					              
 					            }]
 					    });		  
-				  }				  
+				  }
+				  
+				  break;
 				  
 			  }
 			  
@@ -1042,8 +1045,10 @@ function buildPolizaMessage(recipientId, data, indicador) {
       switch(indicador){
       case 1:
     	  template = "generic";
+    	  break;
       case 2:
     	  template = "list";
+    	  break;
       }
 	
 	  var messageData = {
