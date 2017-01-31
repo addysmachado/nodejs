@@ -1009,7 +1009,7 @@ function getDataHCP(recipientId, indicador, dato) {
 					  elements.push({
 					            title: "Póliza " + data.d.results[i].Xref1 ,
 					            subtitle: "Recibo " + data.d.results[i].Xblnr,               
-					            image_url: SERVER_URL + "/assets/poliza_"+i+".png",
+					            image_url: SERVER_URL + "/assets/poliza_0"+i+".png",
 			                    default_action: {
 			                        type: "web_url",
 			                        url: "https://www.sura.com"
