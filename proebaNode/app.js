@@ -75,7 +75,7 @@ app.get('/webhook', function(req, res) {
 
 app.get('/prueba', function(req, res) {
 	
-     var data = getElemntsHCP();
+     var data = getDataHCP('123456');
 	
 	  var messageData = {
 			    recipient: {
@@ -962,7 +962,7 @@ function getDataHCP(recipientId) {
 				    });		  
 			  }
 			  
-			  buildPolizaMessage(recipientId, data);
+			  buildPolizaMessage(recipientId, elements);
 		  }	      
 	      
 	    } else {
