@@ -328,6 +328,10 @@ function receivedMessage(event) {
     	  sendPolizaMessage(senderID);
     	  break;
 
+      case 'recibo':
+    	  sendReciboMessage(senderID);
+    	  break;    	  
+    	  
       default:
         sendTextMessage(senderID, messageText);
     }
@@ -644,7 +648,13 @@ function sendGenericMessage(recipientId) {
 
 function sendPolizaMessage(recipientId) {
 	  
-      getDataHCP(recipientId);
+      getDataHCP(recipientId, 1);
+	
+	}
+
+function sendReciboMessage(recipientId) {
+	  
+    getDataHCP(recipientId, 2);
 	
 	}
 
@@ -927,7 +937,7 @@ function getElemntsHCP() {
 	return elements;
 }
 
-function getDataHCP(recipientId) {
+function getDataHCP(recipientId, indicador) {
 		
 	  var data = null;
 	  var elements 	= [];
@@ -946,23 +956,77 @@ function getDataHCP(recipientId) {
 		  if(data)
 		  {
 			  var len = data.d.results.length;
-			  for (var i = 0; i < len; i++) {
+			  
+			  switch (indicador) {
+			  
+			  case 1:
+			  
+				  for (var i = 0; i < len; i++) {
+					  elements.push({
+					            title: "Póliza " + data.d.results[i].Xref1 ,
+					            subtitle: "Recibo " + data.d.results[i].Xblnr,
+					            item_url: "https://www.sura.com",               
+					            image_url: SERVER_URL + "/assets/poliza_"+i+".png",
+					            buttons: [{
+					              type: "web_url",
+					              url: "https://www.sura.com",
+					              title: "Ver detalle"
+					            }]
+					          			        
+					        
+					    });		  
+				  }
+			  
+			  case 2:				  
 				  elements.push({
-				            title: "Póliza " + data.d.results[i].Xref1 ,
-				            subtitle: "Recibo " + data.d.results[i].Xblnr,
-				            item_url: "https://www.sura.com",               
-				            image_url: SERVER_URL + "/assets/poliza_"+i+".png",
-				            buttons: [{
-				              type: "web_url",
-				              url: "https://www.sura.com",
-				              title: "Pagar"
-				            }]
-				          			        
-				        
-				    });		  
+                  title: "Detalle de Recibos Pendientes",
+                  image_url: SERVER_URL + "/assets/poliza_00.png",
+                  subtitle: "Consulta toda tu cartera",
+                  default_action: {
+                      type: "web_url",
+                      url: "https://www.sura.com",
+                      messenger_extensions: true,
+                      webview_height_ratio: "tall",
+                      fallback_url: "https://www.sura.com"
+                  },
+                  buttons: [
+                      {
+                          title: "Ver",
+                          type: "web_url",
+                          url: "https://www.sura.com",
+                          messenger_extensions: true,
+                          webview_height_ratio: "tall",
+                          fallback_url: "https://www.sura.com"                        
+                      }
+                  ]
+              });
+				  
+				  for (var i = 0; i < len; i++) {
+					  elements.push({
+					            title: "Póliza " + data.d.results[i].Xref1 ,
+					            subtitle: "Recibo " + data.d.results[i].Xblnr,               
+					            image_url: SERVER_URL + "/assets/poliza_"+i+".png",
+			                    default_action: {
+			                        type: "web_url",
+			                        url: "https://www.sura.com",
+			                        messenger_extensions: true,
+			                        webview_height_ratio: "tall",
+			                        fallback_url: "https://www.sura.com"
+			                    },					            
+					            buttons: [{
+					              type: "web_url",
+					              url: "https://www.sura.com",
+					              title: "Pagar",
+			                      messenger_extensions: true,
+			                      webview_height_ratio: "tall",
+			                      fallback_url: "https://www.sura.com"					              
+					            }]
+					    });		  
+				  }				  
+				  
 			  }
 			  
-			  buildPolizaMessage(recipientId, elements);
+			  buildPolizaMessage(recipientId, elements, indicador);
 		  }	      
 	      
 	    } else {
@@ -972,7 +1036,15 @@ function getDataHCP(recipientId) {
 	  
 	}
 
-function buildPolizaMessage(recipientId, data) {
+function buildPolizaMessage(recipientId, data, indicador) {
+	
+	  var template = "";
+      switch(indicador){
+      case 1:
+    	  template = "generic";
+      case 2:
+    	  template = "list";
+      }
 	
 	  var messageData = {
 	    recipient: {
@@ -982,7 +1054,7 @@ function buildPolizaMessage(recipientId, data) {
 	      attachment: {
 	        type: "template",
 	        payload: {
-	          template_type: "generic",
+	          template_type: template,
 	          elements: data
 	        }
 	      }
