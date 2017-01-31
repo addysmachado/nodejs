@@ -559,7 +559,7 @@ function sendTextMessage(recipientId, messageText) {
   };
 
   //callSendAPI(messageData);
-  callSendAPIHCP(messageData);
+  callSendAPI(messageData);
 }
 
 /*
