@@ -994,10 +994,7 @@ function getDataHCP(recipientId, indicador) {
                       {
                           title: "Ver",
                           type: "web_url",
-                          url: "https://www.sura.com",
-                          messenger_extensions: false,
-                          webview_height_ratio: "tall",
-                          fallback_url: "https://peterssendreceiveapp.ngrok.io/"                        
+                          url: "https://www.sura.com"                   
                       }
                   ]
               });
@@ -1017,10 +1014,7 @@ function getDataHCP(recipientId, indicador) {
 					            buttons: [{
 					              type: "web_url",
 					              url: "https://www.sura.com",
-					              title: "Pagar",
-			                      messenger_extensions: false,
-			                      webview_height_ratio: "tall",
-			                      fallback_url: "https://peterssendreceiveapp.ngrok.io/"					              
+					              title: "Pagar"					              
 					            }]
 					    });		  
 				  }
