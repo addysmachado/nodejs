@@ -955,7 +955,6 @@ function getDataHCP() {
 	      
 	      data = JSON.parse(body);
 	      console.log("Body 1_2 %s", data.d.results[0].Xref1);
-	      console.log("Body 1_3 %s", messageData.recipient.id);
 	      
 	    } else {
 	      console.error("Failed calling Body HCP ", response.statusCode, response.statusMessage, body.error);
