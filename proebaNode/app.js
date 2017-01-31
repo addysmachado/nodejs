@@ -985,10 +985,7 @@ function getDataHCP(recipientId, indicador) {
                   subtitle: "Consulta toda tu cartera",
                   default_action: {
                       type: "web_url",
-                      url: "https://www.sura.com",
-                      messenger_extensions: false,
-                      webview_height_ratio: "tall",
-                      fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+                      url: "https://www.sura.com"
                   },
                   buttons: [
                       {
@@ -1006,10 +1003,7 @@ function getDataHCP(recipientId, indicador) {
 					            image_url: SERVER_URL + "/assets/poliza_"+i+".png",
 			                    default_action: {
 			                        type: "web_url",
-			                        url: "https://www.sura.com",
-			                        messenger_extensions: false,
-			                        webview_height_ratio: "tall",
-			                        fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+			                        url: "https://www.sura.com"
 			                    },					            
 					            buttons: [{
 					              type: "web_url",
